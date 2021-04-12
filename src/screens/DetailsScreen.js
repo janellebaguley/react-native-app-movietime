@@ -1,13 +1,27 @@
+import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {Button, View, Text, StyleSheet} from 'react-native';
 
-const DetailsScreen = () => {
+const DetailsScreen = ({navigation, route}) => {
+    console.log(route)
+    // const {screenNumber}= route.params
+    const movie = route.params.movie;
     return (
         <View style={styles.mainView}>
-            <Text>Details Screen</Text>
+            <Text style={{fontSize: 20}}>{movie.title} {movie.release}</Text>
+            <Text style={{fontSize: 100}}>{movie.ButtonscreenNumber}</Text>
             <Button 
             title= "Go to Image"
-            onPress={() => {console.log("Go to BigImageView")}}/>
+            onPress={() => {navigation.navigate("BigImageview")}}/>
+            <Button 
+            title= "More Details"
+            onPress={() => {movie.screenNumber = movie.screenNumber + 1;
+            console.log(movie)
+            navigation.push("Details_to_Details",
+            {movie: movie})}}/>
+            <Button 
+            title= "Go Back Home"
+            onPress={() => {navigation.popToTop()}}/>
         </View>
     )
 }
