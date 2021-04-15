@@ -1,27 +1,28 @@
 import {NavigationContainer} from '@react-navigation/native';
-import React from 'react';
+import React, {useEffect}from 'react';
 import {Button, View, Text, StyleSheet} from 'react-native';
 
 const DetailsScreen = ({navigation, route}) => {
     console.log(route)
     // const {screenNumber}= route.params
     const movie = route.params.movie;
+
+    useEffect(() => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', "http://www.omdbapi.com/?apikey=e2f213c1&t=Star+Wars&y=1977")
+        xhr.send();
+        xhr.onload = () => {
+            if (xhr.status == 200){
+                console.log(xhr.responseText)
+            }else {
+                console.log(`HTTP Request failed ${xhr.status}`)
+            }
+        }
+    }, []);
+    
     return (
         <View style={styles.mainView}>
-            <Text style={{fontSize: 20}}>{movie.title} {movie.release}</Text>
-            <Text style={{fontSize: 100}}>{movie.ButtonscreenNumber}</Text>
-            <Button 
-            title= "Go to Image"
-            onPress={() => {navigation.navigate("BigImageview")}}/>
-            <Button 
-            title= "More Details"
-            onPress={() => {movie.screenNumber = movie.screenNumber + 1;
-            console.log(movie)
-            navigation.push("Details_to_Details",
-            {movie: movie})}}/>
-            <Button 
-            title= "Go Back Home"
-            onPress={() => {navigation.popToTop()}}/>
+           
         </View>
     )
 }
