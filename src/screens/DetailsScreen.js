@@ -13,7 +13,8 @@ const DetailsScreen = ({navigation, route}) => {
         xhr.send();
         xhr.onload = () => {
             if (xhr.status == 200){
-                console.log(xhr.responseText)
+                let response = JSON.parse(xhr.response)
+                setMovieDetails(response)
             }else {
                 console.log(`HTTP Request failed ${xhr.status}`)
             }
@@ -22,7 +23,15 @@ const DetailsScreen = ({navigation, route}) => {
     
     return (
         <View style={styles.mainView}>
-           
+           <Text>{
+           (movieDetails == null ? "" : movieDetails.Title)}
+           </Text>
+           <Text>{
+           (movieDetails == null ? "" : movieDetails.Released)}
+           </Text>
+           <Text>{
+           (movieDetails == null ? "" : movieDetails.Plot)}
+           </Text>
         </View>
     )
 }
